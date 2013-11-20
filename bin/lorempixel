@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'lorempixel'
+require 'trollop'
+
+opts = Trollop::options do
+  opt :amount, "Set number of images to create", :default => 10
+  opt :name, "Set the naming convention for images (alphanumeric and underscore only)", :default => "image_"
+  opt :dir, "Set the directory to put the images in", :default => "images"
+end
+
+puts Lorempixel.new(opts)
