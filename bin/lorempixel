@@ -7,7 +7,7 @@ opts = Trollop::options do
   opt :amount, "Set number of images to create", :default => 10
   opt :dir, "Set the directory to put the images in", :default => "images"
   opt :height, "Set the height(eg 100) or height range (eg 100-500)", :default => "100-500"
-  opt :name, "Set the naming convention for images (alphanumeric and underscore only)", :default => "image_"
+  opt :prefix, "Set the naming convention for images (alphanumeric and underscore only)", :default => "image_"
   opt :width, "Set the width(eg 100) or width range (eg 100-500)", :default => "100-500"
 end
 

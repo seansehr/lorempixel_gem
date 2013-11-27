@@ -1,34 +1,61 @@
 require "httpclient"
 
 class Lorempixel
-  attr_writer :args
-  attr_reader :amount, :a_length, :dir, :prefix, :size
+  attr_reader :amount, :dir, :prefix, :height, :width
 
   def initialize args = {}
-    @args = args
-    @amount = args[:amount] || 10
-    @a_length = @amount.to_s.length
-    @prefix = args[:name]  || 'image_'
-    @host = 'http://lorempixel.com/'
+    self.format_dimensions args
+    self.set_props args
 
-    @size = Hash.new
-    @size[:height] = self.set(:height)
-    @size[:width] = self.set(:width)
-
-    dir = args[:dir] || 'images'
-    unless File.directory?(dir)
-      Dir.mkdir(dir)
+    unless File.directory?(@dir)
+      Dir.mkdir(@dir)
     end
     @dir = Dir.new(dir)
-    Dir.chdir(dir)
+    Dir.chdir(@dir)
+  end
+
+  def format_dimensions args
+    [:height, :width].each do |v|
+      if args[v]
+        r = args[v].split("-")
+        args[v] = {
+          :min => r.first.chomp.to_i,
+          :max => r.last.chomp.to_i,
+        }
+      end
+    end
+  end
+
+  def set_props args
+    self.class.defaults.each do |k, v|
+      v = args[k.to_sym] || v
+      self.instance_variable_set("@#{k}", v)
+    end
+  end
+
+  def self.defaults
+    r = {
+      "amount" => 10,
+      "prefix" => "image_",
+      "height" => {
+        :min => 100,
+        :max => 500
+      },
+      "width" => {
+        :min => 100,
+        :max => 500
+      },
+      "dir" => "images"
+    }
+    r
   end
 
   def create_images
     (1..@amount).each do |i|
-      height = rand(@size[:height][:min]..@size[:height][:max])
-      width = rand(@size[:width][:min]..@size[:width][:max])
-      i_num = "%0#{@a_length}d" % i
-      url = "#{@host}#{width}/#{height}/"
+      url = self.get_provider
+
+      i_num = "%0#{@amount.to_s.length}d" % i
+
       HTTPClient.new
       result = HTTPClient.get url
       File.open("#{@prefix}#{i_num}.png", "w") do |f|
@@ -37,13 +64,10 @@ class Lorempixel
     end
   end
 
-  def set prop
-    r = {:min => 100, :max => 500}
-    if @args[prop]
-      split = @args[prop].split("-")
-      r[:min] = split.first.to_i
-      r[:max] = split.last.to_i
-    end
-    r
+  def get_provider
+    height = rand(@height[:min]..@height[:max])
+    width = rand(@width[:min]..@width[:max])
+    "http://lorempixel.com/#{width}/#{height}/"
   end
+
 end
