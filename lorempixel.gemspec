@@ -12,5 +12,6 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.executables << 'lorempixel'
 
-  s.add_runtime_dependency "trollop", "httpclient"
+  s.add_runtime_dependency "trollop"
+  s.add_runtime_dependency "httpclient"
 end
