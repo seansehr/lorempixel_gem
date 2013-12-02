@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/lorempixel"
+require "#{File.dirname(__FILE__)}/../lib/lorempixel"
 
 describe Lorempixel do
 
@@ -62,4 +62,7 @@ describe Lorempixel do
     r.should eq @lorempixel.amount
   end
   
+  after(:all) do
+    FileUtils.rm_rf(@lorempixel.dir)
+  end
 end
