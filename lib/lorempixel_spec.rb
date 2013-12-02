@@ -53,7 +53,7 @@ describe Lorempixel do
     File.directory?(@lorempixel.dir).should be true
   end
 
-  it "should create the specified number of images" do
+  it "should create the specified number of images with the correct prefix" do
     r = 0
     (1..@lorempixel.amount).each do |i|
       i_num = "%0#{@lorempixel.amount.to_s.length}d" % i
