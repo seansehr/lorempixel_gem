@@ -47,6 +47,10 @@ describe Lorempixel do
         end
       end
     end
+
+    after(:all) do
+      FileUtils.rm_rf(@custom_lorempixel.dir)
+    end
   end
 
   it "should create a directory" do
