@@ -12,7 +12,7 @@ _A Ruby gem for downloading placeholder images._
 
 ```rspec test/```
 or
-```rake```
+``` rake ```
 
 
 ## Options
