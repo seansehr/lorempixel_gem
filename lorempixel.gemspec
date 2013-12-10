@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'lorempixel'
-  s.version     = '0.0.0'
+  s.version     = '0.0.1'
   s.date        = '2013-11-19'
   s.summary     = "Dummy Image Generator"
   s.description = "A Ruby gem for making dummy images from www.lorempixel.com"
